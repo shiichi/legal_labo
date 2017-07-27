@@ -60,6 +60,11 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
+        // Redirect to Admin login page, if the user should be loged in as admin user.
+        if (in_array('admin', $exception->guards())) {
+            return redirect()->guest('admin/login');
+        }
+
         return redirect()->guest(route('login'));
     }
 }
